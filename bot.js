@@ -218,6 +218,21 @@ bot.client.on('guildMemberAdd', function(user, event) {
     });
 });
 
+/*
+ * Send a message whenever a user leaves the server
+ */
+bot.client.on('guildMemberRemove', function(user, event) {
+    var serverChannelId = user.guild_id;
+    var serverName = this.servers[serverChannelId].name;
+
+    var message = util.format('Byebye <@!%s>', user.id);
+
+    this.sendMessage({
+        to: serverChannelId,
+        message: message
+    });
+});
+
 bot.client.on('any', function(user, event) {
     //console.log(arguments);
 });
