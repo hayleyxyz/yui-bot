@@ -1,0 +1,26 @@
+{
+  "name": "yui-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "dependencies": {
+    "discord.io": "^1.13.4",
+    "knex": "^0.11.7",
+    "moment": "^2.14.1",
+    "sqlite3": "^3.1.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kimoi/yui-bot.git"
+  },
+  "author": "Luna & yuiko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kimoi/yui-bot/issues"
+  },
+  "homepage": "https://github.com/kimoi/yui-bot#readme"
+}

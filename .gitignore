@@ -1,3 +1,4 @@
 /node_modules
 /.idea
 /config.js
+/db.sqlite3
