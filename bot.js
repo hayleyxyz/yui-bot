@@ -367,6 +367,10 @@ bot.addCommand(new Command(/^.unmute (<@!?([0-9]+)>)$/i, function(client, user, 
     }
 }));
 
+/*
+ * Text mute a specified user on all channels
+ * Usage: .muteall @user
+ */
 bot.addCommand(new Command(/^.muteall (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
     var serverId = client.serverFromChannel(channelId);
 
@@ -396,6 +400,10 @@ bot.addCommand(new Command(/^.muteall (<@!?([0-9]+)>)$/i, function(client, user,
     }
 }));
 
+/*
+ * Text unmute a specified user on all channels
+ * Usage: .unmuteall @user
+ */
 bot.addCommand(new Command(/^.unmuteall (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
     var serverId = client.serverFromChannel(channelId);
 
@@ -430,24 +438,32 @@ bot.addCommand(new Command(/^.lastseen (<@!?([0-9]+)>)$/i, function(client, user
     var args = message.match(/(<@!?([0-9]+)>)/);
     var targetUserId = args[2];
 
-    db.getLastSeen(serverId, targetUserId, function(lastSeenAt) {
-        if(lastSeenAt) {
-            var dateTime = moment(lastSeenAt);
-            var formatted = dateTime.format('dddd, MMMM Do YYYY, h:mm:ss a');
+    if(targetUserId === client.id) {
+        client.sendMessage({
+            to: channelId,
+            message: util.format('I\'m always watching.')
+        });
+    }
+    else {
+        db.getLastSeen(serverId, targetUserId, function (lastSeenAt) {
+            if (lastSeenAt) {
+                var dateTime = moment(lastSeenAt);
+                var formatted = dateTime.format('dddd, MMMM Do YYYY, h:mm:ss a');
 
-            client.sendMessage({
-                to: channelId,
-                message: util.format('<@!%s> was last seen here %s', targetUserId, formatted)
-            });
-        }
-        else {
-            client.sendMessage({
-                to: channelId,
-                message: util.format('I\'ve not seen <@!%s> here yet!', targetUserId)
-            });
-        }
+                client.sendMessage({
+                    to: channelId,
+                    message: util.format('<@!%s> was last seen here %s', targetUserId, formatted)
+                });
+            }
+            else {
+                client.sendMessage({
+                    to: channelId,
+                    message: util.format('I\'ve not seen <@!%s> here yet!', targetUserId)
+                });
+            }
 
-    });
+        });
+    }
 }));
 
 /*
