@@ -450,6 +450,12 @@ bot.addCommand(new Command(/^.lastseen (<@!?([0-9]+)>)$/i, function(client, user
             message: util.format('She\'s always here.')
         });
     }
+    else if(targetUserId === '175044949744680970') { // me!
+        client.sendMessage({
+            to: channelId,
+            message: util.format('...')
+        });
+    }
     else {
         db.getLastSeen(serverId, targetUserId, function (lastSeenAt) {
             if (lastSeenAt) {
