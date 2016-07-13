@@ -6,6 +6,28 @@ var config = require('./config');
 
 const BOT_VERSION = '0.1';
 
+function YuiDiscordClient(options) {
+    Discord.Client.call(this, options);
+
+    (function(scope) {
+
+        scope.editChannelPermissions = function(channelId, overwriteId) {
+            var payload = {
+                deny: (1 << Discord.Client.Permissions.TEXT_SEND_MESSAGES),
+                allow: 0,
+                type: 'member'
+            };
+
+            this._req('put', "https://discordapp.com/api/channels/" + channelId + "/permissions/" + overwriteId, payload, function(err, res) {
+                
+            });
+        }
+
+    })(this);
+}
+
+util.inherits(YuiDiscordClient, Discord.Client);
+
 function YuiBot(token) {
     (function(scope) {
 
@@ -14,7 +36,7 @@ function YuiBot(token) {
         scope.adminRoles = [ ];
 
         scope.ctor = function() {
-            scope.client = new Discord.Client({
+            scope.client = new YuiDiscordClient({
                 token: token,
                 autorun: true
             });
@@ -203,6 +225,18 @@ bot.addCommand(new Command(/^.game (.+)$/i, function(client, user, userId, chann
     }
 }));
 
+bot.addCommand(new Command(/^.mute (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
+
+    var serverId = client.serverFromChannel(channelId);
+
+    if(this.userHasAdmin(serverId, userId)) {
+        var args = message.match(/(<@!?([0-9]+)>)/);
+        var targetUserId = args[2];
+
+        client.editChannelPermissions(channelId, targetUserId);
+    }
+}));
+
 /*
  * Send a welcome message whenever a user joins the server
  */
@@ -231,6 +265,10 @@ bot.client.on('guildMemberRemove', function(user, event) {
         to: serverChannelId,
         message: message
     });
+});
+
+bot.client.on('ready', function(user, event) {
+    console.log(this.servers['199113218600206336'].channels['199113218600206336']);
 });
 
 bot.client.on('any', function(user, event) {
