@@ -444,6 +444,12 @@ bot.addCommand(new Command(/^.lastseen (<@!?([0-9]+)>)$/i, function(client, user
             message: util.format('I\'m always watching.')
         });
     }
+    else if(targetUserId === '159592526498496512') { // Luna
+        client.sendMessage({
+            to: channelId,
+            message: util.format('She\'s always here.')
+        });
+    }
     else {
         db.getLastSeen(serverId, targetUserId, function (lastSeenAt) {
             if (lastSeenAt) {
