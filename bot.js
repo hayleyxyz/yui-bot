@@ -275,7 +275,7 @@ for(var i in config.fileResponses) {
  * Change user nickname on the server
  * Usage: .nick @user nickname
  */
-bot.addCommand(new Command(/^.nick (<@!?([0-9]+)>)( +)(.+)$/i, function(client, user, userId, channelId, message, event) {
+bot.addCommand(new Command(/^\.nick (<@!?([0-9]+)>)( +)(.+)$/i, function(client, user, userId, channelId, message, event) {
 
     var serverId = client.serverFromChannel(channelId);
 
@@ -296,7 +296,7 @@ bot.addCommand(new Command(/^.nick (<@!?([0-9]+)>)( +)(.+)$/i, function(client, 
  * Change the bot's currently displayed playing game
  * Usage: .game game name
  */
-bot.addCommand(new Command(/^.game (.+)$/i, function(client, user, userId, channelId, message, event) {
+bot.addCommand(new Command(/^\.game (.+)$/i, function(client, user, userId, channelId, message, event) {
 
     var serverId = client.serverFromChannel(channelId);
 
@@ -313,7 +313,7 @@ bot.addCommand(new Command(/^.game (.+)$/i, function(client, user, userId, chann
  * Text mute a specified user in the current channel
  * Usage .mute @user
  */
-bot.addCommand(new Command(/^.mute (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
+bot.addCommand(new Command(/^\.mute (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
     var serverId = client.serverFromChannel(channelId);
 
     if(this.userHasAdmin(serverId, userId)) {
@@ -342,7 +342,7 @@ bot.addCommand(new Command(/^.mute (<@!?([0-9]+)>)$/i, function(client, user, us
  * Text unmute a specified user in the current channel
  * Usage: .unmute @user
  */
-bot.addCommand(new Command(/^.unmute (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
+bot.addCommand(new Command(/^\.unmute (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
     var serverId = client.serverFromChannel(channelId);
 
     if(this.userHasAdmin(serverId, userId)) {
@@ -371,7 +371,7 @@ bot.addCommand(new Command(/^.unmute (<@!?([0-9]+)>)$/i, function(client, user, 
  * Text mute a specified user on all channels
  * Usage: .muteall @user
  */
-bot.addCommand(new Command(/^.muteall (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
+bot.addCommand(new Command(/^\.muteall (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
     var serverId = client.serverFromChannel(channelId);
 
     if(this.userHasAdmin(serverId, userId)) {
@@ -404,7 +404,7 @@ bot.addCommand(new Command(/^.muteall (<@!?([0-9]+)>)$/i, function(client, user,
  * Text unmute a specified user on all channels
  * Usage: .unmuteall @user
  */
-bot.addCommand(new Command(/^.unmuteall (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
+bot.addCommand(new Command(/^\.unmuteall (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
     var serverId = client.serverFromChannel(channelId);
 
     if(this.userHasAdmin(serverId, userId)) {
@@ -433,7 +433,7 @@ bot.addCommand(new Command(/^.unmuteall (<@!?([0-9]+)>)$/i, function(client, use
     }
 }));
 
-bot.addCommand(new Command(/^.lastseen (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
+bot.addCommand(new Command(/^\.lastseen (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
     var serverId = client.serverFromChannel(channelId);
     var args = message.match(/(<@!?([0-9]+)>)/);
     var targetUserId = args[2];
