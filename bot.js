@@ -456,6 +456,12 @@ bot.addCommand(new Command(/^.lastseen (<@!?([0-9]+)>)$/i, function(client, user
             message: util.format('...')
         });
     }
+    else if(targetUserId === '108233630018437120') { // Ene
+        client.sendMessage({
+            to: channelId,
+            message: util.format('Doesn\'t matter, has shit taste.')
+        });
+    }
     else {
         db.getLastSeen(serverId, targetUserId, function (lastSeenAt) {
             if (lastSeenAt) {
