@@ -1,17 +1,15 @@
 
 exports.up = function(knex, Promise) {
-    return knex.schema.createTable('server_users', function (table) {
+    return knex.schema.createTable('users', function (table) {
         table.increments();
-        table.string('server_id');
-        table.string('user_id');
+        table.string('discord_id').unique();
+        table.string('discriminator');
         table.string('username');
         table.dateTime('last_seen_at');
         table.timestamps();
-
-        table.unique([ 'server_id', 'user_id' ]);
     });
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTable('server_users');
+    return knex.schema.dropTable('users');
 };

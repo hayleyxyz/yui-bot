@@ -2,7 +2,7 @@
   "name": "yui-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "bot.js",
+  "main": "index.js",
   "dependencies": {
     "discord.io": "^1.13.4",
     "knex": "^0.11.7",
