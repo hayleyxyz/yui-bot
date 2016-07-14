@@ -433,6 +433,10 @@ bot.addCommand(new Command(/^\.unmuteall (<@!?([0-9]+)>)$/i, function(client, us
     }
 }));
 
+/*
+ * Display the last time the specified user was seen on this channel
+ * Usage: .lastseen @user
+ */
 bot.addCommand(new Command(/^\.lastseen (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
     var serverId = client.serverFromChannel(channelId);
     var args = message.match(/(<@!?([0-9]+)>)/);
@@ -454,12 +458,6 @@ bot.addCommand(new Command(/^\.lastseen (<@!?([0-9]+)>)$/i, function(client, use
         client.sendMessage({
             to: channelId,
             message: util.format('...')
-        });
-    }
-    else if(targetUserId === '108233630018437120') { // Ene
-        client.sendMessage({
-            to: channelId,
-            message: util.format('Doesn\'t matter, has shit taste.')
         });
     }
     else {
@@ -484,14 +482,36 @@ bot.addCommand(new Command(/^\.lastseen (<@!?([0-9]+)>)$/i, function(client, use
     }
 }));
 
+/*
+ * Echo a phrase back to the user
+ * Usage: .say phrase
+ */
 bot.addCommand(new Command(/^\.say (.+)$/i, function(client, user, userId, channelId, message, event) {
     var match = message.match(/^\.say (.+)$/i);
     var messageToSay = match[1];
 
-	   client.sendMessage({
-	to: channelId,
-	message: messageToSay
-})
+    var serverId = client.serverFromChannel(channelId);
+
+    if(this.userHasAdmin(serverId, userId)) {
+        client.sendMessage({
+            to: channelId,
+            message: messageToSay
+        });
+    }
+}));
+
+/*
+ * Poke a user.
+ * Usage .poke @user
+ */
+bot.addCommand(new Command(/^\.poke (<@!?([0-9]+)>)$/i, function(client, user, userId, channelId, message, event) {
+    var args = message.match(/(<@!?([0-9]+)>)/);
+    var targetUserId = args[2];
+
+    client.sendMessage({
+        to: channelId,
+        message: util.format('*pokes <@!%s>*', targetUserId)
+    });
 }));
 
 /*
@@ -524,6 +544,9 @@ bot.client.on('guildMemberRemove', function(user, event) {
     });
 });
 
+/*
+ * Update the last_seen_at field in the db whenever a user changes their status
+ */
 bot.client.on('presence', function(username, userId, status, game, event) {
     db.recordLastSeen(event.d.guild_id, userId, username);
 });
