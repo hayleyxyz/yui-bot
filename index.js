@@ -44,6 +44,7 @@ bot.addCommand(commands.SayCommand);
 bot.addCommand(commands.LastSeenCommand);
 bot.addCommand(commands.UnflipTableCommand);
 bot.addCommand(commands.PantsuCommand);
+bot.addCommand(commands.RankCommand);
 
 /*
  * Send a welcome message whenever a user joins the server
@@ -100,16 +101,36 @@ bot.client.on('message', function(user, userId, channelId, message, event) {
         });
 
     /*
-     * Save the message in the db
+     * Here lies the logic for the XP cooldown
+     * It checks to see if the user has posted within the last minute, and if so will set an xp value of 0, otherwise
+     * it will set a random xp value between 80-100
      */
-    var messageRecord = new models.Message({
-        discord_id: event.d.id,
-        server_id: serverId,
-        channel_id: channelId,
-        user_id: userId,
-        content: message,
-        timestamp: moment(event.d.timestamp).format('Y-MM-DD HH:mm:ss')
-    }).save();
+    knex('messages').count('id as count')
+        .where('user_id', userId)
+        .where('timestamp', '>=', moment().subtract(1, 'minutes').format('Y-MM-DD HH:mm:ss'))
+        .then(function(result) {
+
+            var xp = Math.round(Math.random() * (100 - 60)) + 60; // Random XP between 80-100
+
+            if(result.length > 0) {
+                if(result[0].count >0) {
+                    xp = 0;
+                }
+            }
+
+            /*
+             * Save the message in the db
+             */
+            var messageRecord = new models.Message({
+                discord_id: event.d.id,
+                server_id: serverId,
+                channel_id: channelId,
+                user_id: userId,
+                content: message,
+                xp: xp,
+                timestamp: moment(event.d.timestamp).format('Y-MM-DD HH:mm:ss')
+            }).save();
+        });
 });
 
 bot.client.on('presence', function(username, userId, status, game, event) {
