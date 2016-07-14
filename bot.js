@@ -484,6 +484,16 @@ bot.addCommand(new Command(/^\.lastseen (<@!?([0-9]+)>)$/i, function(client, use
     }
 }));
 
+bot.addCommand(new Command(/^\.say (.+)$/i, function(client, user, userId, channelId, message, event) {
+    var match = message.match(/^\.say (.+)$/i);
+    var messageToSay = match[1];
+
+	   client.sendMessage({
+	to: channelId,
+	message: messageToSay
+})
+}));
+
 /*
  * Send a welcome message whenever a user joins the server
  */
@@ -492,7 +502,7 @@ bot.client.on('guildMemberAdd', function(user, event) {
     var serverName = this.servers[serverChannelId].name;
 
     var message = util.format('<@!%s> has joined %s', user.id, serverName);
-
+	
     this.sendMessage({
         to: serverChannelId,
         message: message
@@ -506,7 +516,7 @@ bot.client.on('guildMemberRemove', function(user, event) {
     var serverChannelId = user.guild_id;
     var serverName = this.servers[serverChannelId].name;
 
-    var message = util.format('Byebye <@!%s>', user.id);
+    var message = util.format('Byebye <@!%s> \=\(', user.id);
 
     this.sendMessage({
         to: serverChannelId,
