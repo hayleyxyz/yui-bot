@@ -1,13 +1,10 @@
 // Update with your config settings.
 
+var config = require('./config');
+
 module.exports = {
 
-  development: {
-    client: 'sqlite3',
-    connection: {
-      filename: './db.sqlite3'
-    }
-  },
+  development: config.knexOptions,
 
   staging: {
     client: 'postgresql',
