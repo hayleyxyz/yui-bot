@@ -47,50 +47,20 @@ for(var i in config.fileResponses) {
 /*
  * Add all bespoke commands
  */
-bot.addCommand(commands.NickCommand);
+//bot.addCommand(commands.NickCommand);
 bot.addCommand(commands.GameCommand);
-bot.addCommand(commands.PokeCommand);
-bot.addCommand(commands.PatCommand);
+//bot.addCommand(commands.PokeCommand);
+//bot.addCommand(commands.PatCommand);
 bot.addCommand(commands.MuteCommand);
 bot.addCommand(commands.UnmuteCommand);
 bot.addCommand(commands.MuteAllCommand);
 bot.addCommand(commands.UnmuteAllCommand);
-bot.addCommand(commands.LastSeenCommand);
-bot.addCommand(commands.SayCommand);
-bot.addCommand(commands.PokeBackCommand);
-bot.addCommand(commands.UnflipTableCommand);
-bot.addCommand(commands.PantsuCommand);
-bot.addCommand(commands.RankCommand);
-
-/*
- * Send a welcome message whenever a user joins the server
- */
-bot.client.on('guildMemberAdd', function(user, event) {
-    var serverChannelId = user.guild_id;
-    var serverName = this.servers[serverChannelId].name;
-
-    var message = util.format('<@!%s> has joined %s', user.id, serverName);
-	
-    this.sendMessage({
-        to: serverChannelId,
-        message: message
-    });
-});
-
-/*
- * Send a message whenever a user leaves the server
- */
-bot.client.on('guildMemberRemove', function(user, event) {
-    var serverChannelId = user.guild_id;
-    var serverName = this.servers[serverChannelId].name;
-
-    var message = util.format('Byebye <@!%s> \=\(', user.id);
-
-    this.sendMessage({
-        to: serverChannelId,
-        message: message
-    });
-});
+//bot.addCommand(commands.LastSeenCommand);
+//bot.addCommand(commands.SayCommand);
+//bot.addCommand(commands.PokeBackCommand);
+//bot.addCommand(commands.UnflipTableCommand);
+//bot.addCommand(commands.PantsuCommand);
+//bot.addCommand(commands.RankCommand);
 
 /*
  * Log all received messages to DB
