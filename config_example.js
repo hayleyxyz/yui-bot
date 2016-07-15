@@ -16,5 +16,18 @@ module.exports = {
             file: 'approve.png',
             message: 'Sign Of Approval!'
         }
-    ]
+    ],
+    adminRoles: {
+        '001122': [ 'Bot Admin' ]
+    },
+    blacklistedChannels: [
+        '001122'
+    ],
+    knexOptions: {
+        client: 'sqlite3',
+        connection: {
+            filename: './db.sqlite3'
+        },
+        useNullAsDefault: true
+    }
 };
