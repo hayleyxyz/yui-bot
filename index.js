@@ -3,14 +3,29 @@ var config = require('./config');
 var moment = require('moment');
 var YuiBot = require('./lib/bot')
 
+/*
+ * Bot/client setup
+ */
 var bot = new YuiBot(config.token);
-bot.setAdminRoles(config.adminRoles);
-bot.setBlacklistedChannels(config.blacklistedChannels);
 
+if(config.adminRoles) {
+    bot.setAdminRoles(config.adminRoles);
+}
+
+if(config.blacklistedChannels) {
+    bot.setBlacklistedChannels(config.blacklistedChannels);
+}
+
+/*
+ * Init DB/ORM stuff
+ */
 var knex = require('knex')(config.knexOptions);
 var bookshelf = require('bookshelf')(knex);
 var models = require('./lib/models')(bookshelf);
 
+/*
+ * Bot commands
+ */
 var commands = require('./lib/commands')(models, knex);
 
 /*
@@ -134,6 +149,9 @@ bot.client.on('message', function(user, userId, channelId, message, event) {
         });
 });
 
+/*
+ * Update user record whenever their status changes
+ */
 bot.client.on('presence', function(username, userId, status, game, event) {
     new models.User({ discord_id: event.d.user.id })
         .fetch()
