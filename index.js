@@ -5,6 +5,7 @@ var YuiBot = require('./lib/bot')
 
 var bot = new YuiBot(config.token);
 bot.setAdminRoles(config.adminRoles);
+bot.setBlacklistedChannels(config.blacklistedChannels);
 
 var knex = require('knex')(config.knexOptions);
 var bookshelf = require('bookshelf')(knex);
