@@ -104,14 +104,14 @@ bot.client.on('message', function(user, userId, channelId, message, event) {
     /*
      * Here lies the logic for the XP cooldown
      * It checks to see if the user has posted within the last minute, and if so will set an xp value of 0, otherwise
-     * it will set a random xp value between 80-100
+     * it will set a random xp value between 10-20
      */
     knex('messages').count('id as count')
         .where('user_id', userId)
         .where('timestamp', '>=', moment().subtract(1, 'minutes').format('Y-MM-DD HH:mm:ss'))
         .then(function(result) {
 
-            var xp = Math.round(Math.random() * (100 - 60)) + 60; // Random XP between 80-100
+            var xp = Math.round(Math.random() * (20 - 10)) + 10; // Random XP between 10-20
 
             if(result.length > 0) {
                 if(result[0].count >0) {
